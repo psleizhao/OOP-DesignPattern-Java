@@ -9,17 +9,48 @@
 <!-- TODO:  Place your form here with the required input fields and a button. -->
 <!-- TODO:  Make sure to use the POST method instead of the GET method. -->
 <!-- HINT:  Look inside web.xml file to see the URL pattern for the servlet. -->
-<FORM ACTION="http://localhost:8080/PeerTutorServletDAO/PeerTutorServlet-URL" METHOD="POST">
+
+<button onclick="showForm('assignForm')">Assign A Peer Tutor</button>
+<button onclick="showForm('deleteForm')">Delete A Peer Tutor</button>
+<button onclick="showForm('updateForm')">Update Student Name</button>
+
+<FORM id="assignForm" style="display: none;" ACTION="http://localhost:8080/PeerTutorServletDAO/PeerTutorServlet-URL" METHOD="POST">
   <label>Peer Tutor Last Name:</label>
   <INPUT TYPE="TEXT" NAME="lastName" ><BR>
   <label>Peer Tutor First Name:</label>
   <INPUT TYPE="TEXT" NAME="firstName" ><BR>
   <label>Course Code:</label>
   <INPUT TYPE="TEXT" NAME="courseCode" ><BR>  
-  <INPUT TYPE="SUBMIT" NAME="submit" VALUE="Submit"> <!-- Press this button to submit form -->
-  <INPUT TYPE="SUBMIT" NAME="submit" VALUE="Delete">
-  <BUTTON>Update</BUTTON>
+  <INPUT TYPE="SUBMIT" NAME="submit" VALUE = "Assign"> <!-- Press this button to submit form -->
 </FORM>
+
+<FORM id="deleteForm" style="display: none;" ACTION="http://localhost:8080/PeerTutorServletDAO/PeerTutorServlet-URL" METHOD="POST">
+  <label>Peer Tutor ID:</label>
+  <INPUT TYPE="TEXT" NAME="peerTutorID" ><BR>
+  <INPUT TYPE="SUBMIT" NAME="submit" VALUE = "Delete"> <!-- Press this button to submit form -->
+</FORM>
+
+<FORM id="updateForm" style="display: none;" ACTION="http://localhost:8080/PeerTutorServletDAO/PeerTutorServlet-URL" METHOD="POST">
+  <label>Student Current Last Name:</label>
+  <INPUT TYPE="TEXT" NAME="oldLastName" ><BR>
+  <label>Student Current First Name:</label>
+  <INPUT TYPE="TEXT" NAME="oldFirstName" ><BR>
+    <label>Student New Last Name:</label>
+  <INPUT TYPE="TEXT" NAME="newLastName" ><BR>
+  <label>Student New First Name:</label>
+  <INPUT TYPE="TEXT" NAME="newFirstName" ><BR>
+  <INPUT TYPE="SUBMIT" NAME="submit" VALUE = "Update"> <!-- Press this button to submit form -->
+</FORM>
+
+<script>
+    function showForm(formId) {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.style.display = 'none';
+        });
+        document.getElementById(formId).style.display = 'block';
+    }
+</script>
 </CENTER>
 </BODY>
 </HTML>
