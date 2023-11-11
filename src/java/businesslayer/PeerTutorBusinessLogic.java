@@ -4,6 +4,7 @@ import dataaccesslayer.PeerTutorDAO;
 import dataaccesslayer.PeerTutorDAOImpl;
 import java.util.List;
 import transferobject.PeerTutor;
+import transferobject.Student;
 
 public class PeerTutorBusinessLogic {
     private PeerTutorDAO peerTutorDAO = null;
@@ -56,6 +57,10 @@ public class PeerTutorBusinessLogic {
     public int deletePeerTutor(PeerTutor peerTutor) {
         // TODO:  Add your code here.  Need to call the appropriate DAO method.
         return peerTutorDAO.deletePeerTutor(peerTutor);
+    }
+    
+    public int updateStudent(Student oldStudent, Student newStudent){
+        return peerTutorDAO.updateStudent(oldStudent, newStudent);
     }
     
 }

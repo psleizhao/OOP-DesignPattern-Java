@@ -385,19 +385,22 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
 //                    "UPDATE \"studnet\" SET \"FirstName\" = ?, "
 //                    + "\"LastName\" = ? WHERE \"StudentID\" = ?");
             pstmt = con.prepareStatement(
-                    "UPDATE studnet SET FirstName = ?, "
-                    + "LastName = ? WHERE StudentID = ?");
+                    "UPDATE student SET FirstName = ?, "
+                    + "LastName = ? WHERE FirstName = ? AND LastName = ?");
             pstmt.setString(1, newStudent.getFirstName());
             pstmt.setString(2, newStudent.getLastName());
-            pstmt.setInt(3, oldStudent.getStudentID());
+            pstmt.setString(3, oldStudent.getFirstName());
+            pstmt.setString(4, oldStudent.getLastName());
             
             int rowAffected = pstmt.executeUpdate();
             
             pstmt = con.prepareStatement(
                     "UPDATE peertutor SET FirstName = ?, "
                     + "LastName = ? WHERE FirstName = ? AND LastName = ?" );
-            pstmt.setString(1, oldStudent.getFirstName());
-            pstmt.setString(2, oldStudent.getLastName());
+            pstmt.setString(1, newStudent.getFirstName());
+            pstmt.setString(2, newStudent.getLastName());
+            pstmt.setString(3, oldStudent.getFirstName());
+            pstmt.setString(4, oldStudent.getLastName());
             
             rowAffected += pstmt.executeUpdate();
             return rowAffected;
