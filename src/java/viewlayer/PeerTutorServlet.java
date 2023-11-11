@@ -3,15 +3,18 @@ package viewlayer;
 import businesslayer.PeerTutorBusinessLogic;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import transferobject.PeerTutor;
+import transferobject.Student;
 
 public class PeerTutorServlet extends HttpServlet {
-    
+
     PeerTutorBusinessLogic logic = null;
     List<PeerTutor> list = null;
     List<String> gradeList = List.of("A", "A+", "A-");
@@ -48,102 +51,142 @@ public class PeerTutorServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PeerTutorServlet</title>");            
+            out.println("<title>Servlet PeerTutorServlet</title>");
+            out.println("<style> p, span, caption {font-weight: bold;}</style>");
             out.println("</head>");
             out.println("<body BGCOLOR=\"#FDF5E6\">");
             out.println("<h1>Servlet PeerTutorServlet at " + request.getContextPath() + "</h1>");
 
             // Initialize PeerTutor object with appropriate data
-            peerTutor = new PeerTutor();
-            peerTutor.setLastName(request.getParameter("lastName"));
-            peerTutor.setFirstName(request.getParameter("firstName"));
-            courseCode = request.getParameter("courseCode");
-            logic = new PeerTutorBusinessLogic();
-            peerTutor.setPeerTutorID(logic.getPeerTutorID(peerTutor));
-            
             String buttonClicked = request.getParameter("submit");
-            if (buttonClicked.equals("Submit")) {
-            // Create a business logic object
- 
-            if (!logic.isPeerTutorRegistered(peerTutor)) {
-                out.println("<ul><li>Last Name: " + peerTutor.getLastName()
-                        + "</li><li>First Name: " + peerTutor.getFirstName()
-                        + "</li><li>Course Code: " + courseCode
-                        + "</li></ul>");
-                out.println("<p>Error: The person is not registered as a peer tutor.</p>");
-            }
-            else if (!logic.isCourseValid(courseCode)) {
-                out.println("<ul><li>Last Name: " + peerTutor.getLastName()
-                        + "</li><li>First Name: " + peerTutor.getFirstName()
-                        + "</li><li>Course Code: " + courseCode
-                        + "</li></ul>");
-                out.println("<p>Error: The course is not valid.</p>");
-            } else if (!logic.hasPeerTutorTakenCourse(peerTutor, courseCode)) {
-                out.println("<ul><li>Last Name: " + peerTutor.getLastName()
-                        + "</li><li>First Name: " + peerTutor.getFirstName()
-                        + "</li><li>Course Code: " + courseCode
-                        + "</li></ul>");
-                out.println("<p>Error: the peer tutor has not taken the course.</p>");
-            } else if (!gradeList.contains(logic.getPeerTutorLetterGradeForCourse(peerTutor, courseCode))) {
-                out.println("<ul><li>Last Name: " + peerTutor.getLastName()
-                        + "</li><li>First Name: " + peerTutor.getFirstName()
-                        + "</li><li>Course Code: " + courseCode
-                        + "</li></ul>");
-                out.println("<p>Error: The letter grade obtained by the peer tutor for the course is not sufficient.</p>");
-            } else if (logic.isCourseAlreadyAssignedToPeerTutor(peerTutor, courseCode)) {
-                out.println("<ul><li>Last Name: " + peerTutor.getLastName()
-                        + "</li><li>First Name: " + peerTutor.getFirstName()
-                        + "</li><li>Course Code: " + courseCode
-                        + "</li></ul>");
-                out.println("<p>Error: The peer tutor is already assigned to the course.</p>");
-            } else {
-                // Perform insert and display logic
-                // You can add your code here to insert data into the database
-                // and display the result.
-                int rowAffected = logic.assignCourseToPeerTutor(peerTutor, courseCode);
-                list = logic.getAllPeerTutorsForCourse(courseCode);
-                out.println(rowAffected>0?"<p>Assigned!</p>":"<p>Assign failed!</p>");
-                out.println("<table border=\"1\">");
-                out.println("<caption>Table of Peer Tutors for CST8101</caption>");
-                out.println("<tr>");
-                out.println("<td>TutorID</td>");
-                out.println("<td>Last Name</td>");
-                out.println("<td>First Name</td>");
-                out.println("</tr>");
-                for (PeerTutor tutor : list) {
-                    out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
-                            tutor.getPeerTutorID(), tutor.getLastName(), tutor.getFirstName());
+            switch (buttonClicked) {
+                case "Assign" -> {
+                    peerTutor = new PeerTutor();
+                    peerTutor.setLastName(request.getParameter("lastName"));
+                    peerTutor.setFirstName(request.getParameter("firstName"));
+                    courseCode = request.getParameter("courseCode");
+                    logic = new PeerTutorBusinessLogic();
+                    peerTutor.setPeerTutorID(logic.getPeerTutorID(peerTutor));
+                    // Create a business logic object
+
+                    if (!logic.isPeerTutorRegistered(peerTutor)) {
+                        out.println("<ul><li><span>Last Name:</span> " + peerTutor.getLastName()
+                                + "</li><li><span>First Name:</span> " + peerTutor.getFirstName()
+//                                + "</li><li><span>Course Code:<span> " + courseCode
+                                + "</li></ul>");
+                        out.println("<p>Error: The person is not registered as a peer tutor.</p>");
+                    } else if (!logic.isCourseValid(courseCode)) {
+                        out.println("<ul><li><span>Last Name:</span> " + peerTutor.getLastName()
+                                + "</li><li><span>First Name:</span> " + peerTutor.getFirstName()
+                                + "</li><li><span>Course Code:</span> " + courseCode
+                                + "</li></ul>");
+                        out.println("<p>Error: The course is not valid.</p>");
+                    } else if (!logic.hasPeerTutorTakenCourse(peerTutor, courseCode)) {
+                        out.println("<ul><li><span>Last Name:</span> " + peerTutor.getLastName()
+                                + "</li><li><span>First Name:</span> " + peerTutor.getFirstName()
+                                + "</li><li><span>Course Code:</span> " + courseCode
+                                + "</li></ul>");
+                        out.println("<p>Error: The peer tutor has not taken the course.</p>");
+                    } else if (!gradeList.contains(logic.getPeerTutorLetterGradeForCourse(peerTutor, courseCode))) {
+                        out.println("<ul><li><span>Last Name:</span> " + peerTutor.getLastName()
+                                + "</li><li><span>First Name:</span> " + peerTutor.getFirstName()
+                                + "</li><li><span>Course Code:</span> " + courseCode
+                                + "</li></ul>");
+                        out.println("<p>Error: The letter grade obtained by the peer tutor for the course is not sufficient.</p>");
+                    } else if (logic.isCourseAlreadyAssignedToPeerTutor(peerTutor, courseCode)) {
+                        out.println("<ul><li><span>Last Name:</span> " + peerTutor.getLastName()
+                                + "</li><li><span>First Name:</span> " + peerTutor.getFirstName()
+                                + "</li><li><span>Course Code:</span> " + courseCode
+                                + "</li></ul>");
+                        out.println("<p>Error: The peer tutor is already assigned to the course.</p>");
+                    } else {
+                        // Perform insert and display logic
+                        // You can add your code here to insert data into the database
+                        // and display the result.
+                        int rowAffected = logic.assignCourseToPeerTutor(peerTutor, courseCode);
+                        list = logic.getAllPeerTutorsForCourse(courseCode);
+                        out.println(rowAffected > 0 ? "<p>Assigned!</p>" : "<p>Assign failed!</p>");
+                        out.println("<table border=\"1\">");
+                        out.println("<caption>Table of Peer Tutors for CST8101</caption>");
+                        out.println("<tr>");
+                        out.println("<td>TutorID</td>");
+                        out.println("<td>Last Name</td>");
+                        out.println("<td>First Name</td>");
+                        out.println("</tr>");
+                        for (PeerTutor tutor : list) {
+                            out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
+                                    tutor.getPeerTutorID(), tutor.getLastName(), tutor.getFirstName());
+                        }
+                        out.println("</table>");
+                    }
                 }
-                out.println("</table>");
-            }
-            }
-            else{
-                int rowAffected = logic.deletePeerTutor(peerTutor);
-                list = logic.getAllPeerTutorsForCourse(courseCode);
-                out.println(rowAffected>0?"<p>Deleted!</p>":"<p>Delete failed!</p>");
-                out.println("<table border=\"1\">");
-                out.println("<caption>Table of Peer Tutors for CST8101</caption>");
-                out.println("<tr>");
-                out.println("<td>TutorID</td>");
-                out.println("<td>Last Name</td>");
-                out.println("<td>First Name</td>");
-                out.println("</tr>");
-                for (PeerTutor tutor : list) {
-                    out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
-                            tutor.getPeerTutorID(), tutor.getLastName(), tutor.getFirstName());
+
+                case "Delete" -> {
+                    logic = new PeerTutorBusinessLogic();
+                    peerTutor = new PeerTutor();
+                    String idParam = request.getParameter("peerTutorID");
+
+                    try {
+                        peerTutor.setPeerTutorID(Integer.parseInt(idParam));
+                    } catch (NumberFormatException e) {
+                        out.println("<p>Please enter a valid peer tutor ID!</p>");
+                    }
+
+                    int rowAffected = logic.deletePeerTutor(peerTutor);
+                    list = logic.getAllPeerTutorsForCourse("CST8101");
+                    out.println(rowAffected > 0 ? "<p>Deleted!</p>" : "<p>Delete failed!</p>");
+                    out.println("<table border=\"1\">");
+                    out.println("<caption>Table of Peer Tutors for CST8101</caption>");
+                    out.println("<tr>");
+                    out.println("<td>TutorID</td>");
+                    out.println("<td>Last Name</td>");
+                    out.println("<td>First Name</td>");
+                    out.println("</tr>");
+                    for (PeerTutor tutor : list) {
+                        out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
+                                tutor.getPeerTutorID(), tutor.getLastName(), tutor.getFirstName());
+                    }
+                    out.println("</table>");
                 }
-                out.println("</table>");
-                
+
+                case "Update" -> {
+                    Student oldStudent = new Student();
+                    Student newStudent = new Student();
+                    String oldLastName = request.getParameter("oldLastName");
+                    String oldFirstName = request.getParameter("oldFirstName");
+                    String newLastName = request.getParameter("newLastName");
+                    String newFirstName = request.getParameter("newFirstName");
+                    
+                    oldStudent.setLastName(oldLastName);
+                    oldStudent.setFirstName(oldFirstName);
+                    newStudent.setLastName((newLastName.isEmpty()) ? oldLastName : newLastName);
+                    newStudent.setFirstName((newFirstName.isEmpty()) ? oldFirstName : newFirstName);
+                    logic = new PeerTutorBusinessLogic();
+                    int rowAffected = logic.updateStudent(oldStudent, newStudent);
+                    
+                    out.println(rowAffected > 0 ? "<p>Student Name Updated!</p>" : "<p>Update failed!</p>");
+//                    out.println("<table border=\"1\">");
+//                    out.println("<caption>Table of Peer Tutors for CST8101</caption>");
+//                    out.println("<tr>");
+//                    out.println("<td>TutorID</td>");
+//                    out.println("<td>Last Name</td>");
+//                    out.println("<td>First Name</td>");
+//                    out.println("</tr>");
+//                    for (PeerTutor tutor : list) {
+//                        out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
+//                                tutor.getPeerTutorID(), tutor.getLastName(), tutor.getFirstName());
+//                    }
+//                    out.println("</table>");
+                }
+
+                default -> {
+                }
             }
-        
 
             out.println("</body>");
             out.println("</html>");
-        
-    }
+        }
 
-
-    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
