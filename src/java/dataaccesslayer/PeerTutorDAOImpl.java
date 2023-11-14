@@ -3,12 +3,9 @@ package dataaccesslayer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import transferobject.PeerTutor;
 import transferobject.Student;
 
@@ -195,7 +192,9 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
                 System.out.println(ex.getMessage());
             }
         }
-        return peerTutorLetterGradeForCourse;
+        if (peerTutorLetterGradeForCourse!=null){
+        return peerTutorLetterGradeForCourse;}
+        else{return "E";}
     }
 
     @Override
