@@ -305,11 +305,11 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
             rs = pstmt.executeQuery();
             peertutors = new ArrayList<>();
             while (rs.next()) {
-                PeerTutor peertutor = new PeerTutor();
-                peertutor.setPeerTutorID(rs.getInt("PeerTutorID"));
-                peertutor.setLastName(rs.getString("LastName"));
-                peertutor.setFirstName(rs.getString("FirstName"));
-                peertutors.add(peertutor);
+                PeerTutor peerTutor = new PeerTutor();
+                peerTutor.setPeerTutorID(rs.getInt("PeerTutorID"));
+                peerTutor.setLastName(rs.getString("LastName"));
+                peerTutor.setFirstName(rs.getString("FirstName"));
+                peertutors.add(peerTutor);
             }
 
         } catch (SQLException ex) {
@@ -342,11 +342,21 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
 
     @Override
     public int deletePeerTutor(PeerTutor peerTutor) {
-        Connection con = null;
+        Connection con = null;       
         PreparedStatement pstmt = null;
         try {
             DataSource ds = new DataSource();
             con = ds.createConnection();
+            ResultSet rs = null;
+            pstmt = con.prepareStatement("SELECT * FROM peertutor "
+                    + "WHERE PeerTutorID = ?");
+            pstmt.setInt(1, peerTutor.getPeerTutorID());
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                peerTutor.setLastName(rs.getString("LastName"));
+                peerTutor.setFirstName(rs.getString("FirstName"));
+            }
+            
             pstmt = con.prepareStatement(
                     "DELETE FROM peertutorcourse WHERE PeerTutor_PeerTutorID = ?");
             pstmt.setInt(1, peerTutor.getPeerTutorID());

@@ -2,16 +2,20 @@ package businesslayer;
 
 import dataaccesslayer.PeerTutorDAO;
 import dataaccesslayer.PeerTutorDAOImpl;
+import dataaccesslayer.StudentDAO;
+import dataaccesslayer.StudentDAOImpl;
 import java.util.List;
 import transferobject.PeerTutor;
 import transferobject.Student;
 
 public class PeerTutorBusinessLogic {
     private PeerTutorDAO peerTutorDAO = null;
+    private StudentDAO studentDAO = null;
     
     public PeerTutorBusinessLogic() {
         // TODO:  Add your code here.  Need to instantiate a DAO object here.
         peerTutorDAO = new PeerTutorDAOImpl();
+        studentDAO = new StudentDAOImpl();
     }
     
     public synchronized boolean isPeerTutorRegistered(PeerTutor peerTutor) {
@@ -63,4 +67,8 @@ public class PeerTutorBusinessLogic {
         return peerTutorDAO.updateStudent(oldStudent, newStudent);
     }
     
+    public int getStudentID(Student student){
+        return studentDAO.getStudentID(student);
+    }
+
 }

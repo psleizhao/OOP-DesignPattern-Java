@@ -105,7 +105,17 @@ public class PeerTutorServlet extends HttpServlet {
                         // and display the result.
                         int rowAffected = logic.assignCourseToPeerTutor(peerTutor, courseCode);
                         list = logic.getAllPeerTutorsForCourse(courseCode);
-                        out.println(rowAffected > 0 ? "<p>Assigned!</p>" : "<p>Assign failed!</p>");
+                        
+//                        out.println(rowAffected > 0 ? "<p>Assigned!</p>" : "<p>Assign failed!</p>");
+                        if(rowAffected > 0) {
+                            out.println("<p>Student " + peerTutor.getPeerTutorID() + " "
+                                        + peerTutor.getFirstName() + " " + peerTutor.getLastName() + " "
+                                        + "has been assigned to course " + courseCode + "</p>");
+                        }
+                        else {
+                            out.println("<p>Assign failed!</p>");
+                        }
+                        
                         out.println("<table border=\"1\">");
                         out.println("<caption>Table of Peer Tutors for CST8101</caption>");
                         out.println("<tr>");
@@ -134,7 +144,17 @@ public class PeerTutorServlet extends HttpServlet {
 
                     int rowAffected = logic.deletePeerTutor(peerTutor);
                     list = logic.getAllPeerTutorsForCourse("CST8101");
-                    out.println(rowAffected > 0 ? "<p>Deleted!</p>" : "<p>Delete failed!</p>");
+                    
+//                    out.println(rowAffected > 0 ? "<p>Deleted!</p>" : "<p>Delete failed!</p>");
+                    if(rowAffected>0){
+                        out.println("<p>Student " +peerTutor.getPeerTutorID() 
+                                + " " + peerTutor.getFirstName()+ " " + peerTutor.getLastName()                                
+                                + " has been removed from peer tutor list of course CST8101!</p>");
+                    }
+                    else{
+                        out.println("<p>Delete failed! Please comfirm if this student is a peer tutor.</p>");
+                    }
+                    
                     out.println("<table border=\"1\">");
                     out.println("<caption>Table of Peer Tutors for CST8101</caption>");
                     out.println("<tr>");
@@ -156,15 +176,31 @@ public class PeerTutorServlet extends HttpServlet {
                     String oldFirstName = request.getParameter("oldFirstName");
                     String newLastName = request.getParameter("newLastName");
                     String newFirstName = request.getParameter("newFirstName");
+                    int studentID;
+
                     
+                    logic = new PeerTutorBusinessLogic();
+
                     oldStudent.setLastName(oldLastName);
                     oldStudent.setFirstName(oldFirstName);
+                    studentID = logic.getStudentID(oldStudent);
+                    
                     newStudent.setLastName((newLastName.isEmpty()) ? oldLastName : newLastName);
                     newStudent.setFirstName((newFirstName.isEmpty()) ? oldFirstName : newFirstName);
-                    logic = new PeerTutorBusinessLogic();
+                    
+                    oldStudent.setStudentID(studentID);
+                    String oldStudentString = oldStudent.getStudentID() + " " + oldStudent.getFirstName() + " " + oldStudent.getLastName();
+                    String newStudentString = newStudent.getFirstName() + " " + newStudent.getLastName();
+                    
                     int rowAffected = logic.updateStudent(oldStudent, newStudent);
                     
-                    out.println(rowAffected > 0 ? "<p>Student Name Updated!</p>" : "<p>Update failed!</p>");
+                    if(rowAffected>0){
+                        out.println("<p>Student " + oldStudentString + "'s name has been updated to " + newStudentString + "!</p>" );
+                    }
+                    else{
+                        out.println("<p>Student Name Update failed!</p>" );
+                    }
+                    
 //                    out.println("<table border=\"1\">");
 //                    out.println("<caption>Table of Peer Tutors for CST8101</caption>");
 //                    out.println("<tr>");
