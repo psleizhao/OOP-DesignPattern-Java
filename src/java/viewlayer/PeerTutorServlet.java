@@ -15,6 +15,7 @@ public class PeerTutorServlet extends HttpServlet {
 
     PeerTutorBusinessLogic logic = null;
     List<PeerTutor> list = null;
+    List<Student> studentList = null;
     List<String> gradeList = List.of("A", "A+", "A-");
     PeerTutor peerTutor = null;
     String courseCode = null;
@@ -145,7 +146,7 @@ public class PeerTutorServlet extends HttpServlet {
                     
 //                    out.println(rowAffected > 0 ? "<p>Deleted!</p>" : "<p>Delete failed!</p>");
                     if(rowAffected>0){
-                        out.println("<p>Peer tutor " +peerTutor.getPeerTutorID() 
+                        out.println("<p>Peer tutor " + peerTutor.getPeerTutorID() 
                                 + " " + peerTutor.getFirstName()+ " " + peerTutor.getLastName()                                
                                 + " has been removed from peer tutor list of course CST8101!</p>");
                     }
@@ -175,6 +176,7 @@ public class PeerTutorServlet extends HttpServlet {
                     String newLastName = request.getParameter("newLastName");
                     String newFirstName = request.getParameter("newFirstName");
                     int studentID;
+//                    List<Student> studentList = null;
 
                     
                     logic = new PeerTutorBusinessLogic();
@@ -191,7 +193,8 @@ public class PeerTutorServlet extends HttpServlet {
                     String newStudentString = newStudent.getFirstName() + " " + newStudent.getLastName();
                     
                     int rowAffected = logic.updateStudent(oldStudent, newStudent);
-                    
+                    studentList = logic.getAllStudents();
+                            
                     if(rowAffected>0){
                         out.println("<p>Student " + oldStudentString + "'s name has been updated to " + newStudentString + "!</p>" );
                     }
@@ -199,18 +202,18 @@ public class PeerTutorServlet extends HttpServlet {
                         out.println("<p>Student Name Update failed!</p>" );
                     }
                     
-//                    out.println("<table border=\"1\">");
-//                    out.println("<caption>Table of Peer Tutors for CST8101</caption>");
-//                    out.println("<tr>");
-//                    out.println("<td>TutorID</td>");
-//                    out.println("<td>Last Name</td>");
-//                    out.println("<td>First Name</td>");
-//                    out.println("</tr>");
-//                    for (PeerTutor tutor : list) {
-//                        out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
-//                                tutor.getPeerTutorID(), tutor.getLastName(), tutor.getFirstName());
-//                    }
-//                    out.println("</table>");
+                    out.println("<table border=\"1\">");
+                    out.println("<caption>Table of Students</caption>");
+                    out.println("<tr>");
+                    out.println("<td>Student ID</td>");
+                    out.println("<td>Last Name</td>");
+                    out.println("<td>First Name</td>");
+                    out.println("</tr>");
+                    for (Student student : studentList) {
+                        out.printf("<tr><td>%d</td><td>%s</td><td>%s</td></tr>",
+                                student.getStudentID(), student.getLastName(), student.getFirstName());
+                    }
+                    out.println("</table>");
                 }
 
                 default -> {

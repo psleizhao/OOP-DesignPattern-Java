@@ -4,6 +4,7 @@
  */
 package dataaccesslayer;
 
+import java.util.List;
 import transferobject.Student;
 
 /**
@@ -12,4 +13,5 @@ import transferobject.Student;
  */
 public interface StudentDAO {
     int getStudentID(Student student);
+    List<Student> getAllStudents();
 }

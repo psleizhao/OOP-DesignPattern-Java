@@ -70,5 +70,9 @@ public class PeerTutorBusinessLogic {
     public int getStudentID(Student student){
         return studentDAO.getStudentID(student);
     }
+    
+    public List<Student> getAllStudents(){
+        return studentDAO.getAllStudents();
+    }
 
 }
