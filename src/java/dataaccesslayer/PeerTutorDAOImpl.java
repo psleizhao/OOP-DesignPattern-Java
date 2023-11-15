@@ -194,7 +194,7 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         }
         if (peerTutorLetterGradeForCourse!=null){
         return peerTutorLetterGradeForCourse;}
-        else{return "E";}
+        else{return "F";}
     }
 
     @Override

@@ -17,7 +17,7 @@ import transferobject.Student;
 public class StudentDAOImpl implements StudentDAO{
     
     @Override
-    public synchronized int getStudentID(Student student){
+    public int getStudentID(Student student){
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

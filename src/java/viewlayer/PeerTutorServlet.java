@@ -106,7 +106,7 @@ public class PeerTutorServlet extends HttpServlet {
                         
 //                        out.println(rowAffected > 0 ? "<p>Assigned!</p>" : "<p>Assign failed!</p>");
                         if(rowAffected > 0) {
-                            out.println("<p>Student " + peerTutor.getPeerTutorID() + " "
+                            out.println("<p>Peer tutor " + peerTutor.getPeerTutorID() + " "
                                         + peerTutor.getFirstName() + " " + peerTutor.getLastName() + " "
                                         + "has been assigned to course " + courseCode + "</p>");
                         }
@@ -145,7 +145,7 @@ public class PeerTutorServlet extends HttpServlet {
                     
 //                    out.println(rowAffected > 0 ? "<p>Deleted!</p>" : "<p>Delete failed!</p>");
                     if(rowAffected>0){
-                        out.println("<p>Student " +peerTutor.getPeerTutorID() 
+                        out.println("<p>Peer tutor " +peerTutor.getPeerTutorID() 
                                 + " " + peerTutor.getFirstName()+ " " + peerTutor.getLastName()                                
                                 + " has been removed from peer tutor list of course CST8101!</p>");
                     }
