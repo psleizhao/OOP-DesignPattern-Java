@@ -1,3 +1,9 @@
+/* Student Name:Lei Zhao, Yu Song, Zhicheng He
+ * Student Number:041086365, 041086226, 040873597
+ * Course & Section #: 23F_CST8288_023
+ * Declaration: This is our own original work and is free from Plagiarism.
+ */
+
 package dataaccesslayer;
 
 import java.sql.Connection;
@@ -9,8 +15,18 @@ import java.util.List;
 import transferobject.PeerTutor;
 import transferobject.Student;
 
+/**
+ * Implementation of the PeerTutorDAO interface.
+ * Provides methods for accessing and manipulating peer tutor data in the database.
+ */
 public class PeerTutorDAOImpl implements PeerTutorDAO {
 
+     /**
+     * Checks if a peer tutor is registered in the database.
+     *
+     * @param peerTutor The PeerTutor object to be checked.
+     * @return true if the peer tutor is registered, false otherwise.
+     */
     @Override
     public boolean isPeerTutorRegistered(PeerTutor peerTutor) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -55,6 +71,13 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         return false;
     }
 
+    /**
+     * Validates if a course code exists in the database.
+     *
+     * @param courseCode The course code to be validated.
+     * @return true if the course code exists, false otherwise.
+     */
+
     @Override
     public boolean isCourseValid(String courseCode) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -96,6 +119,13 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         return false;
     }
 
+     /**
+     * Checks if a peer tutor has taken a specified course.
+     *
+     * @param peerTutor   The PeerTutor object.
+     * @param courseCode The course code to check.
+     * @return true if the peer tutor has taken the course, false otherwise.
+     */
     @Override
     public boolean hasPeerTutorTakenCourse(PeerTutor peerTutor, String courseCode) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -146,6 +176,13 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
 
     }
 
+    /**
+     * Retrieves the letter grade a peer tutor received for a specific course.
+     *
+     * @param peerTutor   The PeerTutor object.
+     * @param courseCode The course code.
+     * @return The letter grade the peer tutor received for the course.
+     */
     @Override
     public String getPeerTutorLetterGradeForCourse(PeerTutor peerTutor, String courseCode) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -197,6 +234,13 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         else{return "F";}
     }
 
+     /**
+     * Checks if a course is already assigned to a peer tutor.
+     *
+     * @param peerTutor   The PeerTutor object.
+     * @param courseCode The course code to check.
+     * @return true if the course is already assigned, false otherwise.
+     */
     @Override
     public boolean isCourseAlreadyAssignedToPeerTutor(PeerTutor peerTutor, String courseCode) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -246,6 +290,13 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         return rsResult != null;
     }
 
+    /**
+     * Assigns a course to a peer tutor in the database.
+     *
+     * @param peerTutor  The PeerTutor object.
+     * @param courseCode The course code to be assigned.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int assignCourseToPeerTutor(PeerTutor peerTutor, String courseCode) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -286,6 +337,12 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
 
     }
 
+    /**
+     * Retrieves a list of all peer tutors for a specific course from the database.
+     *
+     * @param courseCode The course code.
+     * @return A list of PeerTutor objects associated with the specified course.
+     */
     @Override
     public List<PeerTutor> getAllPeerTutorsForCourse(String courseCode) {
         // TODO:  Add your code here.  Be sure to use try-catch-finally statement.
@@ -340,6 +397,12 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         return peertutors;
     }
 
+     /**
+     * Deletes a peer tutor from the database.
+     *
+     * @param peerTutor The PeerTutor object to be deleted.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int deletePeerTutor(PeerTutor peerTutor) {
         Connection con = null;       
@@ -383,6 +446,13 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         return 0;
     }
 
+     /**
+     * Updates a student's information in the database.
+     *
+     * @param oldStudent The existing Student object before the update.
+     * @param newStudent The new Student object with updated information.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int updateStudent(Student oldStudent, Student newStudent) {
         Connection con = null;
@@ -435,6 +505,12 @@ public class PeerTutorDAOImpl implements PeerTutorDAO {
         return 0;
     }
 
+     /**
+     * Retrieves the ID of a peer tutor from the database.
+     *
+     * @param peerTutor The PeerTutor object whose ID is to be retrieved.
+     * @return The ID of the peer tutor.
+     */
     @Override
     public int getPeerTutorID(PeerTutor peerTutor) {
         Connection con = null;

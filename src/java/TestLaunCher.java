@@ -98,12 +98,12 @@ public class TestLaunCher {
 //                System.out.println("already assigned");
 //            }
 //            else{
-//                logic.assignCourseToPeerTutor(peerTutor, courseCode);
-//                list = logic.getAllPeerTutorsForCourse(courseCode);
-//                for (PeerTutor tutor : list){
-//                    System.out.println(tutor.getFirstName()+", " +tutor.getLastName());
-//                }
-//                System.out.println("inserted");
+                logic.assignCourseToPeerTutor(peerTutor, courseCode);
+                list = logic.getAllPeerTutorsForCourse(courseCode);
+                for (PeerTutor tutor : list){
+                    System.out.println(tutor.getFirstName()+", " +tutor.getLastName());
+                }
+                System.out.println("inserted");
 //            }
             
             logic.deletePeerTutor(peerTutor);
