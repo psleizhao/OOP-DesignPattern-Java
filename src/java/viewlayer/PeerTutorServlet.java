@@ -1,3 +1,9 @@
+/* Student Name:Lei Zhao, Yu Song, Zhicheng He
+ * Student Number:041086365, 041086226, 040873597
+ * Course & Section #: 23F_CST8288_023
+ * Declaration: This is our own original work and is free from Plagiarism.
+ */
+
 package viewlayer;
 
 import businesslayer.PeerTutorBusinessLogic;
@@ -11,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import transferobject.PeerTutor;
 import transferobject.Student;
 
+/**
+ * Servlet class for handling Peer Tutor related requests.
+ */
 public class PeerTutorServlet extends HttpServlet {
 
     PeerTutorBusinessLogic logic = null;
