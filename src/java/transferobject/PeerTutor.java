@@ -13,8 +13,19 @@ package transferobject;
 public class PeerTutor {
 
     // Here are the fields for a peer tutor.
+    /**
+     * The unique identifier for the peer tutor.
+     */
     private int peerTutorID;
+
+    /**
+     * The last name of the peer tutor.
+     */
     private String lastName;
+
+    /**
+     * The first name of the peer tutor.
+     */
     private String firstName;
     
     // TODO:  Add the necessary getters and setters.

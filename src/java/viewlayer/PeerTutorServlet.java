@@ -22,13 +22,36 @@ import transferobject.Student;
  */
 public class PeerTutorServlet extends HttpServlet {
 
-    PeerTutorBusinessLogic logic = null;
-    List<PeerTutor> list = null;
-    List<Student> studentList = null;
-    List<String> gradeList = List.of("A", "A+", "A-");
-    PeerTutor peerTutor = null;
-    String courseCode = null;
+    /**
+     * Business logic component for managing peer tutor-related operations.
+     */
+    private PeerTutorBusinessLogic logic = null;
 
+    /**
+     * List of peer tutors retrieved or manipulated by the business logic component.
+     */
+    private List<PeerTutor> list = null;
+
+    /**
+     * List of students retrieved or manipulated by the business logic component.
+     */
+    private List<Student> studentList = null;
+
+    /**
+     * List of possible grades represented as strings.
+     */
+    private List<String> gradeList = List.of("A", "A+", "A-");
+
+    /**
+     * Represents a peer tutor entity for manipulation or retrieval by the business logic component.
+     */
+    private PeerTutor peerTutor = null;
+
+    /**
+     * Represents the course code related to peer tutors and students.
+     */
+    private String courseCode = null;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

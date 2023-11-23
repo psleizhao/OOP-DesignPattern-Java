@@ -12,33 +12,54 @@ import java.sql.SQLException;
 
 public class DataSource {
 
-    private Connection connection = null;
-    // TODO:  Initialize the url string variable properly.  No need to load the
-    //        JDBC URL, username, and password from a properties file.
-    private final String url = "jdbc:mysql://localhost:3306/peertutor?useSSL=false";
-    private String username = "CST8288";
-    private String password = "CST8288";
 
-    public DataSource() {
-    }
+    /**
+     * The database connection object.
+     */
+    private Connection connection = null;
+
+    /**
+     * The URL of the MySQL database.
+     */
+    private final String url = "jdbc:mysql://localhost:3306/peertutor?useSSL=false";
+
+    /**
+     * The username for accessing the MySQL database.
+     */
+    private final String username = "CST8288";
+
+    /**
+     * The password for accessing the MySQL database.
+     */
+    private final String password = "CST8288";
 
     /*
      * Only use one connection for this application, prevent memory leaks.
      */
+
+    /**
+     * Creates a database connection if one does not already exist.
+     *
+     * @return The database connection.
+     */
     public Connection createConnection() {
-        // TODO:  Add your code here.  Make sure to use try-catch statement.
-        //        Make sure there is only one connection for this application
-        //        to prevent memory leaks.
-        
+        // TODO: Add your code here. Make sure to use a try-catch statement.
+        //       Ensure there is only one connection for this application
+        //       to prevent memory leaks.
+
         try {
+            // Check if a connection already exists
             if (connection != null) {
-                System.out.println("Cannot create new connection, one exists already");
+                System.out.println("Cannot create a new connection, one already exists.");
             } else {
+                // Create a new connection if none exists
                 connection = DriverManager.getConnection(url, username, password);
             }
         } catch (SQLException ex) {
+            // Handle any SQL exceptions that may occur
             ex.printStackTrace();
         }
+
         return connection;
     }
 

@@ -17,7 +17,14 @@ import transferobject.Student;
  * Business Logic class for handling operations related to Peer Tutors.
  */
 public class PeerTutorBusinessLogic {
+    /**
+     * Data Access Object for managing peer tutor-related operations in the database.
+     */
     private PeerTutorDAO peerTutorDAO = null;
+
+    /**
+     * Data Access Object for managing student-related operations in the database.
+     */
     private StudentDAO studentDAO = null;
     
      /**

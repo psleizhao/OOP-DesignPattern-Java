@@ -13,8 +13,19 @@ package transferobject;
 public class Student {
 
     // Here are the fields for a student.
+    /**
+     * The unique identifier for the student.
+     */
     private int studentID;
+
+    /**
+     * The last name of the student.
+     */
     private String lastName;
+
+    /**
+     * The first name of the student.
+     */
     private String firstName;
     
     // TODO:  Add the necessary getters and setters.
