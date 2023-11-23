@@ -59,7 +59,7 @@ public interface PeerTutorDAO {
      * @param courseCode The course code to assign.
      * @return An integer indicating the result of the operation.
      */
-    int assignCourseToPeerTutor(PeerTutor peerTutor, String courseCOde);
+    int assignCourseToPeerTutor(PeerTutor peerTutor, String courseCode);
       /**
      * Retrieves a list of all peer tutors for a specified course.
      *
