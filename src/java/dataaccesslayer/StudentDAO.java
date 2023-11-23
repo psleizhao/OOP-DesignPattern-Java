@@ -32,4 +32,12 @@ public interface StudentDAO {
      * @return A list of Student objects.
      */
     List<Student> getAllStudents();
+    /**
+     * Updates the information of a student in the system.
+     *
+     * @param oldStudent The current Student object before the update.
+     * @param newStudent The new Student object with updated information.
+     * @return An integer indicating the result of the update operation.
+     */
+    int updateStudent(Student oldStudent, Student newStudent);
 }

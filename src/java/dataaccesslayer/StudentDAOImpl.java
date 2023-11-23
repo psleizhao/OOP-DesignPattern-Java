@@ -120,4 +120,63 @@ public class StudentDAOImpl implements StudentDAO{
         }
         return students;
     }
+    
+     /**
+     * Updates a student's information in the database.
+     *
+     * @param oldStudent The existing Student object before the update.
+     * @param newStudent The new Student object with updated information.
+     * @return The number of rows affected in the database.
+     */
+    @Override
+    public int updateStudent(Student oldStudent, Student newStudent) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            DataSource ds = new DataSource();
+            con = ds.createConnection();
+//            pstmt = con.prepareStatement(
+//                    "UPDATE \"studnet\" SET \"FirstName\" = ?, "
+//                    + "\"LastName\" = ? WHERE \"StudentID\" = ?");
+            pstmt = con.prepareStatement(
+                    "UPDATE student SET FirstName = ?, "
+                    + "LastName = ? WHERE FirstName = ? AND LastName = ?");
+            pstmt.setString(1, newStudent.getFirstName());
+            pstmt.setString(2, newStudent.getLastName());
+            pstmt.setString(3, oldStudent.getFirstName());
+            pstmt.setString(4, oldStudent.getLastName());
+            
+            int rowAffected = pstmt.executeUpdate();
+            
+            pstmt = con.prepareStatement(
+                    "UPDATE peertutor SET FirstName = ?, "
+                    + "LastName = ? WHERE FirstName = ? AND LastName = ?" );
+            pstmt.setString(1, newStudent.getFirstName());
+            pstmt.setString(2, newStudent.getLastName());
+            pstmt.setString(3, oldStudent.getFirstName());
+            pstmt.setString(4, oldStudent.getLastName());
+            
+            rowAffected += pstmt.executeUpdate();
+            return rowAffected;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return 0;
+    }
 }

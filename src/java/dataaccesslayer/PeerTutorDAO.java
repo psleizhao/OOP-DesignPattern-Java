@@ -81,13 +81,13 @@ public interface PeerTutorDAO {
      * @return The ID of the peer tutor.
      */
     int getPeerTutorID(PeerTutor peerTutor);
-    /**
-     * Updates the information of a student in the system.
-     *
-     * @param oldStudent The current Student object before the update.
-     * @param newStudent The new Student object with updated information.
-     * @return An integer indicating the result of the update operation.
-     */
-    int updateStudent(Student oldStudent, Student newStudent);
+//    /**
+//     * Updates the information of a student in the system.
+//     *
+//     * @param oldStudent The current Student object before the update.
+//     * @param newStudent The new Student object with updated information.
+//     * @return An integer indicating the result of the update operation.
+//     */
+//    int updateStudent(Student oldStudent, Student newStudent);
 }
 

@@ -140,7 +140,7 @@ public class PeerTutorBusinessLogic {
      * @return An integer indicating the result of the update operation.
      */
     public int updateStudent(Student oldStudent, Student newStudent){
-        return peerTutorDAO.updateStudent(oldStudent, newStudent);
+        return studentDAO.updateStudent(oldStudent, newStudent);
     }
     
      /**
